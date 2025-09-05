@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agenda de Cumpleaños</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    h2 { color: #333; }
+    input, button { margin: 5px 0; padding: 8px; width: 100%; }
+    .cliente { background: #fff; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    .cliente button { background: #e74c3c; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Agenda de Cumpleaños</h2>
+  <input type="text" id="nombre" placeholder="Nombre del cliente">
+  <input type="tel" id="telefono" placeholder="Teléfono">
+  <input type="date" id="fecha" placeholder="Fecha de nacimiento">
+  <button onclick="agregarCliente()">Guardar Cliente</button>
+
+  <h3>Clientes guardados:</h3>
+  <div id="listaClientes"></div>
+
+  <script>
+    function obtenerClientes() {
+      return JSON.parse(localStorage.getItem('clientes')) || [];
+    }
+
+    function guardarClientes(clientes) {
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+    }
+
+    function agregarCliente() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const fecha = document.getElementById('fecha').value;
+
+      if (!nombre || !telefono || !fecha) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      const cliente = { nombre, telefono, fecha };
+      const clientes = obtenerClientes();
+      clientes.push(cliente);
+      guardarClientes(clientes);
+      mostrarClientes();
+
+      // Limpiar formulario
+      document.getElementById('nombre').value = '';
+      document.getElementById('telefono').value = '';
+      document.getElementById('fecha').value = '';
+    }
+
+    function eliminarCliente(index) {
+      const clientes = obtenerClientes();
+      clientes.splice(index, 1);
+      guardarClientes(clientes);
+      mostrarClientes();
+    }
+
+    function mostrarClientes() {
+      const lista = document.getElementById('listaClientes');
+      lista.innerHTML = '';
+      const clientes = obtenerClientes();
+
+      clientes.forEach((c, index) => {
+        const div = document.createElement('div');
+        div.className = 'cliente';
+        div.innerHTML = `
+          <strong>Nombre:</strong> ${c.nombre}<br>
+          <strong>Teléfono:</strong> ${c.telefono}<br>
+          <strong>Fecha de nacimiento:</strong> ${c.fecha}<br>
+          <button onclick="eliminarCliente(${index})">Eliminar</button>
+        `;
+        lista.appendChild(div);
+      });
+    }
+
+    // Mostrar clientes al cargar
+    mostrarClientes();
+  </script>
+</body>
+</html>
