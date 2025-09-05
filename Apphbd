@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agenda de Cumpleaños</title>
+  <title>App de Cumpleaños RISE</title>
   <style>
     body { font-family: Arial; padding: 20px; background: #f4f4f4; }
     h2 { color: #333; }
@@ -13,8 +13,8 @@
 </head>
 <body>
   <h2>Agenda de Cumpleaños</h2>
-  <input type="text" id="nombre" placeholder="Nombre del cliente">
-  <input type="tel" id="telefono" placeholder="Teléfono">
+  <input type="text" id="nombre" placeholder="Nombre/Apodo">
+  <input type="tel" id="telefono" placeholder="whatsapp">
   <input type="date" id="fecha" placeholder="Fecha de nacimiento">
   <button onclick="agregarCliente()">Guardar Cliente</button>
 
